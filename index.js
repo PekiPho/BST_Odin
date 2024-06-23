@@ -8,7 +8,7 @@ class Tree{
         this.root = this.buildTree(inArr);
     }
 
-    buildTree(inArr,begin=0,end=inArr.length-1){
+    buildTree(inArr,begin=0,end=inArr.length){
         
         if(begin>=end) return null;
         
@@ -17,29 +17,53 @@ class Tree{
 
         let root=new Node(
             inArr[mid],
-            this.right=this.buildTree(inArr,mid+1,end),
-            this.left=this.buildTree(inArr,0,mid)
+            null,null
         );
-        
+        root.right=this.buildTree(inArr,mid+1,end);
+        root.left=this.buildTree(inArr,begin,mid);
         
         
         return root;
     }
 
-    insert(root,value){
-        let temp=root;
-        if(temp.value==null)
+    insert(element,position=this.root,parent=this.root){
+        
+        if(this.root.value==null)
         {
-            temp.value=new Node(value,null,null);
+            this.root=new Node(element,null,null);
+            return;
         }
-        if(value>temp.value)
+        if(position==null)
         {
-            this.insert(temp.right,value);
+            position=new Node(element,null,null);
+            if(parent<position.value)
+                parent.left=position;
+            else parent.right=position;
         }
-        if(value<temp.value)
+        if(element>position.value)
         {
-            this.insert(temp.left,value);
+            this.insert(element,position.right,position);
         }
+        if(element<position.value)
+        {
+            this.insert(element,position.left,position);
+        }
+    }
+
+    find(value,temp=this.root){
+        
+        if(temp==null)
+            return new Node(-1,null,null);
+
+        if(temp.value==value)
+            return temp;
+
+        if(temp.value<value){
+            return this.find(value,temp.right);
+        }
+        if(temp.value>value)
+            return this.find(value,temp.left);
+        
     }
     
 }
@@ -65,7 +89,14 @@ function removeDuplicates(arr) {
 
 let arr=[1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let t = new Tree(arr);
-//t.buildTree(arr);
-prettyPrint(t.root);
+//let a= removeDuplicates(arr);
+//a.sort(function(a, b){return a-b});
+//prettyPrint(t.root);
+//t.insert(1);
+//t.insert(325);
+//t.insert(27);
+//prettyPrint(t.root);
+let n = t.find(23);
+console.log(n.value);
 
 
