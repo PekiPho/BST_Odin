@@ -48,6 +48,7 @@ class Tree{
         {
             this.insert(element,position.left,position);
         }
+
     }
 
     find(value,temp=this.root){
@@ -63,6 +64,24 @@ class Tree{
         }
         if(temp.value>value)
             return this.find(value,temp.left);
+        
+    }
+
+    height(node){
+
+    }
+
+    depth(node,temp=t.root){
+        if(temp==null)
+            return -999;
+        if(temp.value==node.value)
+            return 1;
+        if(node.value<temp.value){
+            return this.depth(node,temp.left)+1;
+        }
+        if(node.value>temp.value){
+            return this.depth(node,temp.right)+1;
+        }
         
     }
     
@@ -97,6 +116,7 @@ let t = new Tree(arr);
 //t.insert(27);
 //prettyPrint(t.root);
 let n = t.find(23);
-console.log(n.value);
-
+//console.log(n.value);
+let d=t.depth(n);
+console.log(d);
 
