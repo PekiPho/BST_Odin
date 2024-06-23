@@ -68,7 +68,9 @@ class Tree{
     }
 
     height(node){
-
+        if(node==null)
+            return 0;
+        return Math.max(this.height(node.right)+1,this.height(node.left)+1)
     }
 
     depth(node,temp=t.root){
@@ -114,9 +116,10 @@ let t = new Tree(arr);
 //t.insert(1);
 //t.insert(325);
 //t.insert(27);
-//prettyPrint(t.root);
+prettyPrint(t.root);
 let n = t.find(23);
 //console.log(n.value);
-let d=t.depth(n);
-console.log(d);
-
+//let d=t.depth(n);
+//console.log(d);
+let h=t.height(n);
+console.log(h);
