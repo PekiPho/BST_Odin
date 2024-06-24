@@ -84,7 +84,18 @@ class Tree{
         if(node.value>temp.value){
             return this.depth(node,temp.right)+1;
         }
-        
+    }
+
+    isBalanced(temp=this.root){
+        if(temp==null)
+            return true;
+
+        let lh=this.height(temp.left);
+        let rh=this.height(temp.right);
+
+        if(Math.abs(lh-rh)<=1 && this.isBalanced(temp.left)==true && this.isBalanced(temp.right)==true)
+            return true;
+        return false;
     }
     
 }
@@ -114,12 +125,14 @@ let t = new Tree(arr);
 //a.sort(function(a, b){return a-b});
 //prettyPrint(t.root);
 //t.insert(1);
-//t.insert(325);
+//t.insert(323);
 //t.insert(27);
 prettyPrint(t.root);
-let n = t.find(23);
+//let n = t.find(67);
 //console.log(n.value);
 //let d=t.depth(n);
 //console.log(d);
-let h=t.height(n);
-console.log(h);
+//let h=t.height(n);
+//console.log(h);
+console.log(t.isBalanced());
+
