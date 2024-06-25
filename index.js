@@ -36,7 +36,7 @@ class Tree{
         if(position==null)
         {
             position=new Node(element,null,null);
-            if(parent<position.value)
+            if(parent.value>position.value)
                 parent.left=position;
             else parent.right=position;
         }
@@ -100,23 +100,64 @@ class Tree{
 
     deleteItem(value,root){
 
-        if(root==null)
-            return root;
-        
-        if(root.value<value)
-            root.right= this.deleteItem(value,root.right);
 
-        if(root.value>value)
-            root.left= this.deleteItem(value,root.left);
-
-        if(root.value==value){
-
-            if(root.left==null)
-                return root.right;
-            if(root.right==null)
-                return root.left;
+        let prev;
+        while(root.value!=value){
+            prev=root;
+            if(value<root.value)
+                root=root.left;
+            else root=root.right;
         }
-        return root;
+        let node=root;
+
+        if(node.right==null)
+            node=node.left;
+        else if(node.left==null)
+            node=node.right;
+        else{
+            let temp=node.left;
+            let prev=node;
+            while(temp.right!=null){
+                prev=temp;
+                temp=temp.right;
+            }
+            node.value=temp.value;
+            if(prev==node)
+                prev.left=temp.left;
+            else prev.right=temp.right;
+            return;
+        }
+        if(root==this.root){
+            this.root=node;
+        }
+        else if(prev.left=root)
+            prev.left=node;
+        else prev.right=node;
+
+
+        // if(root==null)
+        //     return root;
+        
+        // if(root.value<value)
+        //     root.right= this.deleteItem(value,root.right);
+
+        // if(root.value>value)
+        //     root.left= this.deleteItem(value,root.left);
+
+        // if(root.value==value){
+
+        //     if(root.left!=null && root.right!=null){
+        //         root.value=minValue(root.left);
+                
+        //         root.left=this.deleteItem(root.value,root.left);
+        //         return root;
+        //     }
+        //     if(root.left==null)
+        //         return root.right;
+        //     if(root.right==null)
+        //         return root.left;
+        // }
+        
         
     }
     
@@ -139,7 +180,14 @@ function removeDuplicates(arr) {
     return arr.filter((item,
         index) => arr.indexOf(item) === index);
 }
-
+function minValue(link){
+    let minv=link.value;
+    while(link.right!=null){
+        link=link.right;
+        minv=link.value;
+    }
+    return minv;
+}
 
 let arr=[1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let t = new Tree(arr);
@@ -148,7 +196,8 @@ let t = new Tree(arr);
 //prettyPrint(t.root);
 //t.insert(1);
 //t.insert(323);
-//t.insert(27);
+t.insert(27);
+t.insert(24);
 prettyPrint(t.root);
 //let n = t.find(67);
 //console.log(n.value);
@@ -157,7 +206,7 @@ prettyPrint(t.root);
 //let h=t.height(n);
 //console.log(h);
 //console.log(t.isBalanced());
-t.deleteItem(7,t.root);
+t.deleteItem(3,t.root);
 prettyPrint(t.root);
 
 
