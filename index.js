@@ -97,6 +97,28 @@ class Tree{
             return true;
         return false;
     }
+
+    deleteItem(value,root){
+
+        if(root==null)
+            return root;
+        
+        if(root.value<value)
+            root.right= this.deleteItem(value,root.right);
+
+        if(root.value>value)
+            root.left= this.deleteItem(value,root.left);
+
+        if(root.value==value){
+
+            if(root.left==null)
+                return root.right;
+            if(root.right==null)
+                return root.left;
+        }
+        return root;
+        
+    }
     
 }
 
@@ -134,5 +156,8 @@ prettyPrint(t.root);
 //console.log(d);
 //let h=t.height(n);
 //console.log(h);
-console.log(t.isBalanced());
+//console.log(t.isBalanced());
+t.deleteItem(7,t.root);
+prettyPrint(t.root);
+
 
