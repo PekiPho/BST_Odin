@@ -133,34 +133,54 @@ class Tree{
         else if(prev.left=root)
             prev.left=node;
         else prev.right=node;
+    }
 
+    levelOrder(callback){
+        if(!this.root)return [];
 
-        // if(root==null)
-        //     return root;
-        
-        // if(root.value<value)
-        //     root.right= this.deleteItem(value,root.right);
+        let queue=[this.root];
+        let arr=[];
 
-        // if(root.value>value)
-        //     root.left= this.deleteItem(value,root.left);
+        while(queue.length>0){
 
-        // if(root.value==value){
+            let current=queue.shift();
+            if(current.left)queue.push(current.left);
+            if(current.right)queue.push(current.right);
+            if(callback)callback(current);
+            arr.push(current.value);
+        }
+        if(!callback)return arr;
+    }
 
-        //     if(root.left!=null && root.right!=null){
-        //         root.value=minValue(root.left);
-                
-        //         root.left=this.deleteItem(root.value,root.left);
-        //         return root;
-        //     }
-        //     if(root.left==null)
-        //         return root.right;
-        //     if(root.right==null)
-        //         return root.left;
-        // }
-        
-        
+    inOrder(node,arr=[]){
+        if(!this.root)return [];
+
+        if(node.left)this.inOrder(node.left,arr);
+        arr.push(node.value);
+        if(node.right)this.inOrder(node.right,arr);
+
+        return arr;
+    }
+
+    preOrder(node,arr=[]){
+        if(!this.root)return [];
+
+        arr.push(node.value);
+        if(node.left)this.preOrder(node.left,arr);
+        if(node.right)this.preOrder(node.right,arr);
+
+        return arr;
     }
     
+    postOrder(node,arr=[]){
+        if(!this.root)return [];
+
+        if(node.left)this.postOrder(node.left,arr);
+        if(node.right)this.postOrder(node.right,arr);
+        arr.push(node.value);
+
+        return arr;
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -196,9 +216,9 @@ let t = new Tree(arr);
 //prettyPrint(t.root);
 //t.insert(1);
 //t.insert(323);
-t.insert(27);
-t.insert(24);
-prettyPrint(t.root);
+//t.insert(27);
+//t.insert(24);
+//prettyPrint(t.root);
 //let n = t.find(67);
 //console.log(n.value);
 //let d=t.depth(n);
@@ -206,7 +226,10 @@ prettyPrint(t.root);
 //let h=t.height(n);
 //console.log(h);
 //console.log(t.isBalanced());
-t.deleteItem(3,t.root);
+//t.deleteItem(3,t.root);
 prettyPrint(t.root);
-
+console.log(t.levelOrder());
+console.log(t.preOrder(t.root));
+console.log(t.inOrder(t.root));
+console.log(t.postOrder(t.root));
 
