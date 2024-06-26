@@ -181,6 +181,11 @@ class Tree{
 
         return arr;
     }
+
+    rebalance(){
+        let arr=this.inOrder(this.root);
+        this.root=this.buildTree(arr);
+    }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -228,8 +233,13 @@ let t = new Tree(arr);
 //console.log(t.isBalanced());
 //t.deleteItem(3,t.root);
 prettyPrint(t.root);
-console.log(t.levelOrder());
-console.log(t.preOrder(t.root));
-console.log(t.inOrder(t.root));
-console.log(t.postOrder(t.root));
+//console.log(t.levelOrder());
+//console.log(t.preOrder(t.root));
+//console.log(t.inOrder(t.root));
+//console.log(t.postOrder(t.root));
 
+t.insert(320);
+t.insert(315);
+t.insert(310);
+t.rebalance();
+prettyPrint(t.root);
